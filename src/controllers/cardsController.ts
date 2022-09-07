@@ -9,7 +9,14 @@ export async function createCard(req: Request, res: Response){
 }
 
 export async function fetchCards(req: Request, res: Response){
-    const userId:number = res.locals.userId
+    const userId:number = res.locals.userId;
     const card = await cardService.fetchCards(userId);
+    res.status(200).send(card);
+}
+
+export async function fetchOneCard(req: Request, res: Response){
+    const userId:number = res.locals.id;
+    const id:number = parseInt(req.params.id);
+    const card = await cardService.fetchOneCard(userId, id);
     res.status(200).send(card);
 }
