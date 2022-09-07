@@ -7,3 +7,9 @@ export async function createCard(req: Request, res: Response){
     await cardService.createCard({userId,title,number, name, CVV, password,ExpirationDate,isVirtual,type});
     res.sendStatus(201);
 }
+
+export async function fetchCards(req: Request, res: Response){
+    const userId:number = res.locals.userId
+    const card = await cardService.fetchCards(userId);
+    res.status(200).send(card);
+}
