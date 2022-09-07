@@ -15,8 +15,15 @@ export async function fetchCards(req: Request, res: Response){
 }
 
 export async function fetchOneCard(req: Request, res: Response){
-    const userId:number = res.locals.id;
+    const userId:number = res.locals.userId;
     const id:number = parseInt(req.params.id);
     const card = await cardService.fetchOneCard(userId, id);
     res.status(200).send(card);
+}
+
+export async function deleteCard(req: Request, res: Response){
+    const userId:number = res.locals.userId;
+    const id:number = parseInt(req.params.id);
+    await cardService.deleteCard(userId, id);
+    res.sendStatus(200);
 }
