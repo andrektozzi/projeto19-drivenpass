@@ -13,3 +13,10 @@ export async function fetchNotes(req: Request, res: Response){
     const notes = await noteService.fetchNotes(userId);
     res.status(200).send(notes);
 }
+
+export async function fetchOneNote(req: Request, res: Response){
+    const userId:number = res.locals.userId;
+    const id:number = parseInt(req.params.id);
+    const notes = await noteService.fetchOneNote(userId,id);
+    res.status(200).send(notes);
+}
