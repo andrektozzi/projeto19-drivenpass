@@ -20,3 +20,10 @@ export async function fetchOneCredential(req: Request, res: Response){
     const credential = await credentialService.fetchOneCredential(userId,id);
     res.status(200).send(credential);
 }
+
+export async function deleteCredentials(req: Request, res: Response) {
+    const userId: number = res.locals.userId
+    const id:number = parseInt(req.params.id)
+    await credentialService.deleteCredentials(userId,id)
+    res.sendStatus(200);
+}
