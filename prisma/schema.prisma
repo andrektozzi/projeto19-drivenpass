@@ -1,0 +1,78 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model cards {
+  id             Int      @id @default(autoincrement())
+  userId         Int
+  title          String
+  number         String
+  name           String
+  CVV            String
+  password       String
+  ExpirationDate DateTime
+  isVirtual      Boolean
+  type           Type
+  createdAt      DateTime @default(now())
+  user           user     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, title])
+}
+
+model credentials {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  title     String
+  url       String
+  userName  String
+  password  String
+  createdAt DateTime @default(now())
+  user      user     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, title])
+}
+
+model safeNotes {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  title     String   @db.VarChar(50)
+  note      String   @db.VarChar(1000)
+  createdAt DateTime @default(now())
+  user      user     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, title])
+}
+
+model user {
+  id          Int           @id @default(autoincrement())
+  name        String
+  email       String        @unique
+  password    String
+  createdAt   DateTime      @default(now())
+  cards       cards[]
+  credentials credentials[]
+  safeNotes   safeNotes[]
+  wifi        wifi[]
+}
+
+model wifi {
+  id          Int    @id @default(autoincrement())
+  userId      Int
+  title       String
+  networkName String
+  password    String
+  user        user   @relation(fields: [userId], references: [id])
+
+  @@unique([userId, title])
+}
+
+enum Type {
+  CREDIT
+  DEBIT
+  BOTH
+}
