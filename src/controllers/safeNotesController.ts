@@ -20,3 +20,10 @@ export async function fetchOneNote(req: Request, res: Response){
     const notes = await noteService.fetchOneNote(userId,id);
     res.status(200).send(notes);
 }
+
+export async function deleteNotes(req: Request, res: Response){
+    const userId:number = res.locals.userId;
+    const id: number = parseInt(req.params.id);
+    await noteService.deleteNote(userId,id);
+    res.sendStatus(200);
+}
