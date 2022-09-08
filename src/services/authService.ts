@@ -15,7 +15,7 @@ async function verifyUserByEmail(email:string){
     const user = await authRepository.verifyUserByEmail(email)
     if(user)throw{
         type:"conflict",
-        message:"Email já cadastrado"
+        message:"Email já cadastrado!"
     }
 }
 
