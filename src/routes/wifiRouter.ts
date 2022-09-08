@@ -8,6 +8,6 @@ const wifiRouter = Router();
 wifiRouter.post("/wifi", tokenValidator, wifiValidator, createWifi);
 wifiRouter.get("/wifi", tokenValidator, fetchWifis);
 wifiRouter.get("/wifi/:id", tokenValidator, fetchOneWifi);
-wifiRouter.delete("wifi/:id", tokenValidator, deleteWifi);
+wifiRouter.delete("/wifi/:id", tokenValidator, deleteWifi);
 
 export default wifiRouter;
