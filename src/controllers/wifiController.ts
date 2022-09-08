@@ -17,6 +17,13 @@ export async function fetchWifis(req: Request, res: Response){
 export async function fetchOneWifi(req: Request, res: Response){
     const userId:number = res.locals.userId;
     const id:number = parseInt(req.params.id);
-    const wifi = await wifiService.fetchOneWifi(userId,id);
+    const wifi = await wifiService.fetchOneWifi(userId, id);
     res.status(200).send(wifi);
+}
+
+export async function deleteWifi(req: Request, res: Response){
+    const userId:number = res.locals.userId;
+    const id: number = parseInt(req.params.id);
+    await wifiService.deleteWifi(userId, id);
+    res.sendStatus(200);
 }
