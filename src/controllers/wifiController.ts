@@ -13,3 +13,10 @@ export async function fetchWifis(req: Request, res: Response){
     const wifis = await wifiService.fetchWifis(userId);
     res.status(200).send(wifis);
 }
+
+export async function fetchOneWifi(req: Request, res: Response){
+    const userId:number = res.locals.userId;
+    const id:number = parseInt(req.params.id);
+    const wifi = await wifiService.fetchOneWifi(userId,id);
+    res.status(200).send(wifi);
+}

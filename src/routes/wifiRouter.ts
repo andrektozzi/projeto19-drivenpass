@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createWifi, fetchWifis } from "../controllers/wifiController.js";
+import { createWifi, fetchWifis, fetchOneWifi } from "../controllers/wifiController.js";
 import { tokenValidator } from "../middlewares/tokenMiddleware.js";
 import { wifiValidator } from "../middlewares/wifiMiddleware.js";
 
@@ -7,5 +7,6 @@ const wifiRouter = Router();
 
 wifiRouter.post("/wifi", tokenValidator, wifiValidator, createWifi);
 wifiRouter.get("/wifi", tokenValidator, fetchWifis);
+wifiRouter.get("/wifi/:id", tokenValidator, fetchOneWifi);
 
 export default wifiRouter;
