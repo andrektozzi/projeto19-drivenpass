@@ -1,6 +1,7 @@
 import { credentials } from "@prisma/client";
 import Cryptr from "cryptr";
 import * as credentialsRepository from "../repositories/credentialsRepository.js"
+import { decrypt } from "../utils/criptrUtils.js";
 
 export type CreateCredentialData = Omit<credentials, "id" | "createdAt">
 
@@ -25,6 +26,12 @@ async function encryptedPassword(password:string){
 
 export async function fetchCredentials(userId:number){    
     const credentials = await credentialsRepository.fetchCredentialByUserId(userId);
+
+    credentials.map((credential) => {
+        const decryptedPassword = decrypt(credential.password);
+        credential["password"] = decryptedPassword;
+    });
+
     return credentials
 }
 
@@ -34,6 +41,12 @@ export async function fetchOneCredential(userId:number,id:number){
         type:"unprocessable_entity",
         message:"Credencial inexistente"
     }
+
+    credential.map((credential) => {
+        const decryptedPassword = decrypt(credential.password);
+        credential["password"] = decryptedPassword;
+    });
+    
     return credential
 }
 
