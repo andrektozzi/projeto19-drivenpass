@@ -25,7 +25,11 @@ async function createPassword(password:string) {
 
 export async function signIn({email,password}:CreateUserData){
     const user:user = await  verifyUserByEmailForSignIn(email)
-    await verifyPassword(user,password)
+    const checkPassword = bcrypt.compareSync(password, user.password);
+    if(!checkPassword)throw {
+        type: "unauthorized",
+        message: "Email ou senha incorretos!",
+      };
     const token = await generateToken(user)
     return token
 }
@@ -37,10 +41,6 @@ async function verifyUserByEmailForSignIn(email:string) {
         message:"Email não cadastrado"
     } 
     return user
-}
-
-async function verifyPassword(user:user,password: string){
-    return bcrypt.compareSync(password, user.password);
 }
 
 async function generateToken(user:user){
